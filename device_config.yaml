@@ -16,3 +16,4 @@ mqtt:
       dataShapes: 
         - "voltage"
         - "cpuTemp"
+        - "fullDataPackt"
