@@ -55,16 +55,18 @@ class mqtt_connack(connector_abc):
     def connect(self):
         if self.username and self.userpw:
             self.client.username_pw_set(self.username, self.userpw)
-        try:
+            try:
+                self.client.connect(self.host, self.port, self.keepalive)
+                print(f"connect to {self.host}:{self.port}")
+            except err as exception:
+                print(err)
+
+        else:
             self.client.connect(self.host, self.port, self.keepalive)
-            print(f"connect to {self.host}:{self.port}")
-        except err as exception:
-            print(err)
 
     def payload_submit(self, payload):
-        path = self.topic['Data'] + self.publish_path['dataBucket']
+        path = self.topic + self.publish_path
         try:
-            self.client.loop_start()
             res = self.client.publish(path,payload,qos=1)
             res.wait_for_publish()
             print(f"is published: {res.is_published()}")

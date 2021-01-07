@@ -6,14 +6,14 @@ mqtt:
     username: "syjmHv7z-"
     userpw: "ZCsC5XNCsk~mzrsy"
     keepalive: 60
-    topic:
-      Command: "$thing/syjmHv7z-/$cmd/$downlink/"
-      Downlink config: "$thing/syjmHv7z-/$conf/$expected/"
-      Uplink config: "$thing/syjmHv7z-/$conf/$reported/"
-      Data: "$thing/syjmHv7z-/$data/"
-    publish_path:
-      dataBucket: "sensorData"
-      dataShapes: 
-        - "voltage"
-        - "cpuTemp"
-        - "fullDataPackt"
+    topic: "$thing/syjmHv7z-/$data/"
+      # Command: "$thing/syjmHv7z-/$cmd/$downlink/"
+      # Downlink config: "$thing/syjmHv7z-/$conf/$expected/"
+      # Uplink config: "$thing/syjmHv7z-/$conf/$reported/"
+      # Data: "$thing/syjmHv7z-/$data/"
+    publish_path: "sensorData"
+      # dataBucket: "sensorData"
+      # dataShapes: 
+      #   - "voltage"
+      #   - "cpuTemp"
+      #   - "fullDataPackt"

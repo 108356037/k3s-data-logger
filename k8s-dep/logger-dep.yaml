@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: loggertest
+  name: loggertest
+spec:
+  selector:
+    matchLabels:
+      app: loggertest
+  template:
+    metadata:
+      labels:
+        app: loggertest
+    spec:
+      containers:
+      - image: 108356037/datalogger:v1slimcustom
+        name: datalogger
+        resources: 
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: WANT_CUSTOM
+          value: "True"
+
+        - name: BROKER_IP
+          value: "MQTT_BROKER_SVC_PORT_1883_TCP_ADDR"
+
+        - name: BROKER_PORT
+          value: "1883"
+
+        - name: PUBLISH_TOPIC
+          value: "topic/"
+        
+        - name: PUBLISH_PATH
+          value: "the/publish/path"
+        
+        - name: FREQ
+          value: "300.0"
+
+        # command: ["env"]
+        command: ["/bin/bash"]
+        args: ["/usr/src/app/entrypoint.sh"]
