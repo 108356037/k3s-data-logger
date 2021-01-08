@@ -14,15 +14,15 @@ spec:
         app: loggertest
     spec:
       containers:
-      - image: 108356037/datalogger:v1slimcustom
+      - image: 108356037/datalogger:arm64datalogger
         name: datalogger
-        resources: 
+        resources:
           limits:
             memory: "256Mi"
             cpu: "500m"
         env:
-        - name: WANT_CUSTOM
-          value: "True"
+        # - name: WANT_CUSTOM
+        #   value: "True"
 
         - name: BROKER_IP
           value: "MQTT_BROKER_SVC_PORT_1883_TCP_ADDR"
@@ -32,13 +32,16 @@ spec:
 
         - name: PUBLISH_TOPIC
           value: "topic/"
-        
+
         - name: PUBLISH_PATH
           value: "the/publish/path"
-        
+
         - name: FREQ
-          value: "300.0"
+          value: "10.0"
 
         # command: ["env"]
         command: ["/bin/bash"]
         args: ["/usr/src/app/entrypoint.sh"]
+
+      nodeSelector:
+        kubernetes.io/role: worker

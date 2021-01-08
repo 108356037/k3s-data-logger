@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test
+  name: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: test
+  name: test
+spec:
+  ports:
+  - port: 8888
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: test
+  type: NodePort
+status:
+  loadBalancer: {}
