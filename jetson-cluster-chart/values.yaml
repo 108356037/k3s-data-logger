@@ -1,0 +1,22 @@
+daemonset:
+  sensor_monitor:
+    name: 'water-logger'
+    enabled: true
+    nodeSelector:
+      kubernetes.io/role: worker
+    publish_freq: 10.0
+
+mqtt_params:
+  hosts:
+    - 'mqtt.paas.oringnet.cloud'
+    - 'localhost'
+  ports: 1883
+  topic: 
+    - '$thing/syjmHv7z-/$data/'
+    - 'example/path/for/localbroker/'
+  publish_path: 
+    - 'sensorData'
+    - 'sensorData2'
+  client_id: 'thing:syjmHv7z-'
+  username: 'syjmHv7z-'
+  userpw: 'ZCsC5XNCsk~mzrsy'

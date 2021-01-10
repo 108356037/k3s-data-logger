@@ -14,32 +14,37 @@ spec:
         app: loggertest
     spec:
       containers:
-      - image: 108356037/datalogger:arm64datalogger
+      - image: 108356037/datalogger:arm64helmv1
         name: datalogger
         resources:
           limits:
             memory: "256Mi"
             cpu: "500m"
         env:
-        # - name: WANT_CUSTOM
-        #   value: "True"
-
         - name: BROKER_IP
-          value: "MQTT_BROKER_SVC_PORT_1883_TCP_ADDR"
+          value: 'mqtt.paas.oringnet.cloud'
 
         - name: BROKER_PORT
-          value: "1883"
+          value: '1883'
 
         - name: PUBLISH_TOPIC
-          value: "topic/"
+          value: '$thing/syjmHv7z-/$data/'
 
         - name: PUBLISH_PATH
-          value: "the/publish/path"
+          value: 'sensorData2'
+
+        - name: CLIENT_ID
+          value: 'thing:syjmHv7z-'
+
+        - name: USERNAME
+          value: 'syjmHv7z-'
+
+        - name: USERPW
+          value: 'ZCsC5XNCsk~mzrsy'
 
         - name: FREQ
-          value: "10.0"
+          value: '10.0'
 
-        # command: ["env"]
         command: ["/bin/bash"]
         args: ["/usr/src/app/entrypoint.sh"]
 

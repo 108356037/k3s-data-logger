@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: cpufreqagent
+  name: cpufreqagent
+spec:
+  selector:
+    matchLabels:
+      app: cpufreqagent
+  template:
+    metadata:
+      labels:
+        app: cpufreqagent
+    spec:
+      containers:
+      - image: 108356037/cpufreqagent:1.0.0
+        name: cpufreq
+        resources: 
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      nodeSelector:
+        kubernetes.io/role: worker
