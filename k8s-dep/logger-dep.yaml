@@ -43,7 +43,7 @@ spec:
           value: 'ZCsC5XNCsk~mzrsy'
 
         - name: FREQ
-          value: '10.0'
+          value: '60.0'
 
         command: ["/bin/bash"]
         args: ["/usr/src/app/entrypoint.sh"]

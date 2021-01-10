@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: datalogger-react-app
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: datalogger.water.visualize
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: datalogger-react-front
+          servicePort: 3000

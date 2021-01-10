@@ -1,52 +1,39 @@
-{{ if .Values.daemonset.sensor_monitor.enabled }}
+{{- if .Values.daemonset.sensor_monitor.enabled -}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ .Values.daemonset.sensor_monitor.name }}
+{{- $freq:= .Values.daemonset.sensor_monitor.publish_freq -}}
+{{- with .Values.daemonset.sensor_monitor }}
+  name: {{ .name }}
   labels:
-    app: {{ .Values.daemonset.sensor_monitor.name }}
+    app: {{ .name }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.daemonset.sensor_monitor.name }}
+      app: {{ .name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.daemonset.sensor_monitor.name }}
+        app: {{ .name }}
     spec:
-      nodeSelector: {{ .Values.daemonset.sensor_monitor.nodeSelector | toYaml | nindent 8 }}
+      nodeSelector: {{ .nodeSelector | toYaml | nindent 8 }}
       containers:
       - image: 108356037/datalogger:arm64helmv1
-        name: {{ .Values.daemonset.sensor_monitor.name }}
+        name: {{ .name }}
+{{- end }}
         resources:
           limits:
             memory: "256Mi"
             cpu: "500m"
         env:
-        - name: BROKER_IP
-          value: {{ index .Values.mqtt_params.hosts 0 | squote }}
-
-        - name: BROKER_PORT
-          value: {{ .Values.mqtt_params.ports | squote }}
-
-        - name: PUBLISH_TOPIC
-          value: {{ index .Values.mqtt_params.topic 0 | squote }}
-
-        - name: PUBLISH_PATH
-          value: {{ index .Values.mqtt_params.publish_path 0 | squote }}
-
-        - name: CLIENT_ID
-          value: {{ .Values.mqtt_params.client_id | squote }}
-
-        - name: USERNAME
-          value: {{ .Values.mqtt_params.username | squote }}
-
-        - name: USERPW
-          value: {{ .Values.mqtt_params.userpw | squote }}
+        {{- range $key, $val := .Values.rangeParams }}
+        - name: {{ $key }}
+          value: {{ $val | squote }}
+        {{ end }}
 
         - name: FREQ
-          value: {{ .Values.daemonset.sensor_monitor.publish_freq | squote }}
+          value: {{ $freq | squote }}
 
         command: ["/bin/bash"]
         args: ["/usr/src/app/entrypoint.sh"]
-{{ end }}
+{{- end }}
