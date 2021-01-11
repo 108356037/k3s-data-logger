@@ -27,7 +27,7 @@ app: {{ .Values.appConfig.appName -}}
 {{- define "waterlogger.deployment.envconfig" }}
 env:
 {{- range $key, $val := .Values.appConfig.envParams }}
-{{- if ne $key "kubernetes.io/hostname" }}
+{{- if $val }}
 - name: {{ $key }}
   value: {{ $val | squote }}
 {{ end }}{{ end }}{{ end }}

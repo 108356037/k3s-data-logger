@@ -7,7 +7,7 @@ def on_connect(client, userdata, flags, rc):
     # 將訂閱主題寫在on_connet中
     # 如果我們失去連線或重新連線時 
     # 地端程式將會重新訂閱
-    client.subscribe("topic/the/publish/path")
+    client.subscribe("test/path/sensorData")
 
 # 當接收到從伺服器發送的訊息時要進行的動作
 def on_message(client, userdata, msg):
@@ -25,7 +25,7 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 # 設定連線資訊(IP, Port, 連線時間)
-client.connect("10.43.174.25", 1883, 60)
+client.connect("192.168.0.15", 1883, 60)
 
 # 開始連線，執行設定的動作和處理重新連線問題
 # 也可以手動使用其他loop函式來進行連接

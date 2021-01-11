@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: cputemp-agent
+  name: cputemp-agent
+spec:
+  selector:
+    matchLabels:
+      app: cputemp-agent
+  template:
+    metadata:
+      labels:
+        app: cputemp-agent
+    spec:
+      containers:
+      - image: 108356037/arm64cputemp:1.0.0
+        name: arm64cputemp
+        resources: 
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        command: ["/bin/bash"]
+        args: ["/home/entrypoint.sh"]
+      nodeSelector:
+        kubernetes.io/role: worker
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: cpufreq-agent
+  name: cpufreq-agent
+spec:
+  selector:
+    matchLabels:
+      app: cpufreq-agent
+  template:
+    metadata:
+      labels:
+        app: cpufreq-agent
+    spec:
+      containers:
+      - image: 108356037/cpufreqagent:1.0.0
+        name: cpufreq
+        resources: 
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      nodeSelector:
+        kubernetes.io/role: worker
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: systhrottle-alert
+  name: systhrottle-alert
+spec:
+  selector:
+    matchLabels:
+      app: systhrottle-alert
+  template:
+    metadata:
+      labels:
+        app: systhrottle-alert
+    spec:
+      containers:
+      - image: 108356037/systhrottle:1.0.0
+        name: systhrottle
+        resources: 
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      nodeSelector:
+        kubernetes.io/role: worker
+      

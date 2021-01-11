@@ -19,7 +19,6 @@ appConfig:
     USERNAME: syjmHv7z-
     USERPW: ZCsC5XNCsk~mzrsy
     FREQ: 300
-    kubernetes.io/hostname: jetsonv1-desktop
 
   cmds:
     command: "/bin/bash"
