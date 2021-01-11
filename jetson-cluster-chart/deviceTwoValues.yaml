@@ -1,0 +1,31 @@
+environment: "dev"
+
+appConfig:
+  appName: "water-logger-app-device2"
+  appRepository: "108356037"
+  appImage: "datalogger"
+  Imagetag: arm64helmv1
+
+  resourcelimit:
+    memory: "256Mi"
+    cpu: "500m"
+
+  envParams:
+    BROKER_IP: mqtt.paas.oringnet.cloud
+    BROKER_PORT: 1883
+    PUBLISH_TOPIC: $thing/jXQqaBcik/$data/
+    PUBLISH_PATH: sensorData
+    CLIENT_ID: thing:jXQqaBcik
+    USERNAME: jXQqaBcik
+    USERPW: 3QGjm-Dbo0KfVbaO
+    FREQ: 300
+    kubernetes.io/hostname: jetsonv2-desktop
+
+  cmds:
+    command: "/bin/bash"
+    args: "/usr/src/app/entrypoint.sh"
+
+  nodeselector:
+    kubernetes.io/hostname: jetsonv2-desktop
+    kubernetes.io/arch: arm64
+    kubernetes.io/role: worker

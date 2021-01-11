@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appConfig.appName }}-deployment
+  labels: {{- include "waterlogger.deployment.labels" . | indent 6}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {{- include "waterlogger.deployment.selectorLabels" . | indent 6}}
+  template:
+    metadata:
+      labels: {{- include "waterlogger.template.labels" . | indent 8}}
+    spec: 
+      containers: 
+      {{- include "waterlogger.deployment.containerspec" . | indent 6 }} 
+      {{- include "waterlogger.deployment.envconfig" . | indent 8 }}
+      {{- include "waterlogger.deployment.commands" . | indent 8}}
+      nodeSelector: {{- include "waterlogger.deployment.nodeselector" . | indent 8}}
