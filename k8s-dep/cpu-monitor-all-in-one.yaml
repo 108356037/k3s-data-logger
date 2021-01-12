@@ -41,12 +41,14 @@ spec:
         app: cpufreq-agent
     spec:
       containers:
-      - image: 108356037/cpufreqagent:1.0.0
+      - image: 108356037/cpufreqagent:1.1.0
         name: cpufreq
         resources: 
           limits:
             memory: "256Mi"
             cpu: "500m"
+        command: ["/bin/bash"]
+        args: ["/home/entrypoint.sh"]
       nodeSelector:
         kubernetes.io/role: worker
 ---
