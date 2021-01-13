@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: datalogger-react-app
+  name: cifar10-image-classifer
   namespace: default
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: datalogger.water.visualize
+  - host: jetsoncluster.app
     http:
       paths:
-      - path: /
+      - path: /predict
         backend:
-          serviceName: datalogger-react-front
-          servicePort: 3000
+          serviceName: img-classifer-svc
+          servicePort: 5000

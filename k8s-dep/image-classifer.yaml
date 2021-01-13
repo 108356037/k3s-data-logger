@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: img-classifer
+  name: img-classifer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: img-classifer
+  template:
+    metadata:
+      labels:
+        app: img-classifer
+    spec:
+      containers:
+      - image: kubermatic00/kubermatic-dl:latest
+        name: kubermatic-dl
+        ports:
+          - containerPort: 5000
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            cpu: "1000m"
+            memory: "1024Mi"
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: img-classifer
+  name: img-classifer-svc
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: img-classifer
+  type: ClusterIP
+status:
+  loadBalancer: {}
